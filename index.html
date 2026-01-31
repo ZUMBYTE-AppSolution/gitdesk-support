@@ -1,1 +1,734 @@
 
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="dark light" />
+  <title>Zumbyte – GitDesk | Support · Datenschutz · Impressum</title>
+  <meta name="description" content="Support, Datenschutz und Impressum für Zumbyte – GitDesk." />
+
+  <style>
+    :root{
+      /* GitDesk-ish palette */
+      --bg0:#02060b;
+      --bg1:#03121c;
+      --bg2:#041b2a;
+      --cyan:#30d5ff;
+      --cyan2:#00bcd4;
+      --mint:#56f0d6;
+      --ink:#d7e6f2;
+      --muted:#9bb3c6;
+      --line:rgba(255,255,255,.10);
+      --glass:rgba(255,255,255,.06);
+      --glass2:rgba(255,255,255,.09);
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
+      --radius: 16px;
+      --radius2: 22px;
+      --max: 1120px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: var(--sans);
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 700px at 25% 40%, rgba(48,213,255,.18), transparent 60%),
+        radial-gradient(900px 600px at 70% 30%, rgba(86,240,214,.14), transparent 60%),
+        radial-gradient(800px 800px at 60% 80%, rgba(0,188,212,.10), transparent 60%),
+        linear-gradient(135deg, var(--bg2), var(--bg0) 60%, #000 100%);
+      overflow-x:hidden;
+    }
+
+    /* subtle noise overlay */
+    body::before{
+      content:"";
+      position:fixed; inset:0;
+      pointer-events:none;
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,.06), transparent 55%),
+        radial-gradient(circle at 80% 20%, rgba(255,255,255,.04), transparent 60%),
+        radial-gradient(circle at 70% 80%, rgba(255,255,255,.03), transparent 55%);
+      mix-blend-mode: overlay;
+      opacity:.22;
+    }
+
+    a{color:var(--cyan); text-decoration:none}
+    a:hover{text-decoration:underline}
+    code, pre{font-family:var(--mono)}
+    .wrap{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 28px 18px 70px;
+      position:relative;
+    }
+
+    /* Header */
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      padding: 16px 16px;
+      border:1px solid var(--line);
+      border-radius: var(--radius2);
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      min-width: 240px;
+    }
+    .logo{
+      width:42px; height:42px; border-radius: 12px;
+      background:
+        radial-gradient(18px 18px at 25% 25%, rgba(255,255,255,.20), transparent 60%),
+        linear-gradient(135deg, rgba(48,213,255,.85), rgba(0,188,212,.55) 55%, rgba(2,6,11,.2));
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow: 0 10px 30px rgba(0,188,212,.18);
+      position:relative;
+      overflow:hidden;
+    }
+    .logo::after{
+      content:"";
+      position:absolute; inset:-40%;
+      background: conic-gradient(from 200deg, rgba(255,255,255,.0), rgba(255,255,255,.18), rgba(255,255,255,.0));
+      transform: rotate(18deg);
+      opacity:.45;
+    }
+    .brand h1{
+      margin:0;
+      font-size: 16px;
+      line-height:1.15;
+      letter-spacing: .2px;
+    }
+    .brand .sub{
+      margin-top:2px;
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+
+    .topnav{
+      display:flex; gap:10px; flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      color: var(--ink);
+      font-size: 13px;
+      transition: transform .08s ease, background .12s ease, border-color .12s ease;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .pill:hover{
+      background: rgba(255,255,255,.08);
+      border-color: rgba(48,213,255,.28);
+      text-decoration:none;
+      transform: translateY(-1px);
+    }
+    .pill .dot{
+      width:8px; height:8px; border-radius:50%;
+      background: var(--cyan);
+      box-shadow: 0 0 0 4px rgba(48,213,255,.10);
+    }
+
+    /* Layout */
+    .grid{
+      display:grid;
+      grid-template-columns: 320px 1fr;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    /* Sidebar card */
+    .card{
+      border: 1px solid var(--line);
+      border-radius: var(--radius2);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      overflow:hidden;
+    }
+    .sidebar{
+      padding: 12px;
+      position: sticky;
+      top: 16px;
+      height: fit-content;
+    }
+    .search{
+      display:flex; gap:8px;
+      padding: 10px 10px;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: 12px;
+      background: rgba(0,0,0,.22);
+      align-items:center;
+    }
+    .search input{
+      width:100%;
+      border:0;
+      outline:0;
+      background: transparent;
+      color: var(--ink);
+      font-size: 13px;
+    }
+    .search kbd{
+      font-family: var(--mono);
+      font-size: 11px;
+      color: rgba(255,255,255,.75);
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
+      padding: 3px 6px;
+      border-radius: 8px;
+    }
+
+    .sidegroup{
+      margin-top: 12px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding-top: 10px;
+    }
+    .sidegroup h3{
+      margin: 8px 6px;
+      font-size: 12px;
+      color: rgba(255,255,255,.72);
+      font-weight: 650;
+      letter-spacing: .2px;
+      text-transform: none;
+    }
+    .sidelink{
+      display:flex;
+      gap:10px;
+      padding: 10px 10px;
+      border-radius: 12px;
+      border:1px solid transparent;
+      color: var(--ink);
+      transition: background .12s ease, border-color .12s ease;
+      align-items:flex-start;
+    }
+    .sidelink:hover{
+      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.10);
+      text-decoration:none;
+    }
+    .sidelink .badge{
+      margin-left:auto;
+      font-size: 11px;
+      color: rgba(255,255,255,.75);
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      padding: 3px 8px;
+      border-radius: 999px;
+      white-space:nowrap;
+    }
+    .sidelink .title{
+      font-size: 13px;
+      font-weight: 650;
+      line-height:1.2;
+    }
+    .sidelink .desc{
+      margin-top:3px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height:1.35;
+      max-width: 240px;
+    }
+    .ico{
+      width:20px; height:20px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(48,213,255,.12);
+      box-shadow: 0 0 0 4px rgba(48,213,255,.05);
+      flex: 0 0 auto;
+      position:relative;
+    }
+    .ico::after{
+      content:"";
+      position:absolute; inset:4px;
+      border-radius: 4px;
+      background: linear-gradient(135deg, rgba(48,213,255,.75), rgba(86,240,214,.35));
+      opacity:.8;
+    }
+
+    /* Main content */
+    main{
+      padding: 14px;
+    }
+    .hero{
+      padding: 18px 18px 16px;
+      border-radius: var(--radius2);
+      border: 1px solid rgba(255,255,255,.10);
+      background:
+        radial-gradient(700px 240px at 25% 0%, rgba(48,213,255,.16), transparent 70%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      margin-bottom: 14px;
+      box-shadow: 0 14px 40px rgba(0,0,0,.45);
+    }
+    .hero h2{
+      margin:0;
+      font-size: 18px;
+      letter-spacing:.2px;
+    }
+    .hero p{
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 13.5px;
+      max-width: 78ch;
+    }
+    .meta{
+      margin-top: 10px;
+      display:flex; gap:10px; flex-wrap:wrap;
+      color: rgba(255,255,255,.72);
+      font-size: 12px;
+    }
+    .chip{
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.20);
+      padding: 6px 10px;
+      border-radius: 999px;
+    }
+
+    section{
+      margin-top: 14px;
+      padding: 18px;
+    }
+    section h3{
+      margin:0 0 10px;
+      font-size: 16px;
+      letter-spacing:.15px;
+    }
+    section p, section li{
+      color: rgba(255,255,255,.82);
+      line-height: 1.6;
+      font-size: 13.5px;
+    }
+    ul{padding-left: 18px}
+    .two{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .panel{
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 16px;
+      background: rgba(0,0,0,.18);
+      padding: 14px;
+    }
+    .panel h4{
+      margin:0 0 6px;
+      font-size: 13px;
+      color: rgba(255,255,255,.86);
+    }
+    .panel p{margin: 0}
+    .callout{
+      border-left: 3px solid rgba(48,213,255,.75);
+      background: rgba(48,213,255,.06);
+      padding: 12px 12px 12px 12px;
+      border-radius: 14px;
+      margin-top: 10px;
+    }
+    .callout strong{color: rgba(255,255,255,.92)}
+    details{
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: 16px;
+      background: rgba(0,0,0,.16);
+      padding: 12px 12px;
+      margin-top: 10px;
+    }
+    summary{
+      cursor:pointer;
+      font-weight: 650;
+      color: rgba(255,255,255,.90);
+      outline:none;
+    }
+    summary::-webkit-details-marker{display:none}
+    details p{margin: 8px 0 0; color: rgba(255,255,255,.78)}
+    .footer{
+      margin-top: 16px;
+      padding: 14px 18px;
+      color: rgba(255,255,255,.68);
+      font-size: 12.5px;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      border-top:1px solid rgba(255,255,255,.08);
+    }
+
+    /* Responsiveness */
+    @media (max-width: 980px){
+      .grid{grid-template-columns: 1fr}
+      .sidebar{position:relative; top:auto}
+      header{flex-direction:column; align-items:flex-start}
+      .topnav{justify-content:flex-start}
+      .two{grid-template-columns: 1fr}
+    }
+
+    /* Reduce motion */
+    @media (prefers-reduced-motion: reduce){
+      *{transition:none !important; scroll-behavior:auto !important}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header aria-label="Kopfbereich">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <h1>Zumbyte – GitDesk</h1>
+          <div class="sub">Support · Datenschutz · Impressum (vormals „GitWarden“)</div>
+        </div>
+      </div>
+
+      <nav class="topnav" aria-label="Schnellnavigation">
+        <a class="pill" href="#support"><span class="dot" aria-hidden="true"></span>Support</a>
+        <a class="pill" href="#privacy"><span class="dot" aria-hidden="true"></span>Datenschutz</a>
+        <a class="pill" href="#imprint"><span class="dot" aria-hidden="true"></span>Impressum</a>
+      </nav>
+    </header>
+
+    <div class="grid">
+      <aside class="card sidebar" aria-label="Seitenleiste">
+        <div class="search" role="search" aria-label="Seitensuche (lokal)">
+          <span style="opacity:.8" aria-hidden="true">⌕</span>
+          <input id="q" type="search" placeholder="Suchen (Fetch, Privacy, Kontakt …)" autocomplete="off" />
+          <kbd>⌘K</kbd>
+        </div>
+
+        <div class="sidegroup">
+          <h3>Bereiche</h3>
+
+          <a class="sidelink" href="#support">
+            <span class="ico" aria-hidden="true"></span>
+            <div>
+              <div class="title">Support & Kontakt</div>
+              <div class="desc">FAQ, Fehler melden, Feature-Wünsche, Rückfragen.</div>
+            </div>
+            <span class="badge">Support</span>
+          </a>
+
+          <a class="sidelink" href="#privacy">
+            <span class="ico" aria-hidden="true"></span>
+            <div>
+              <div class="title">Datenschutzerklärung</div>
+              <div class="desc">Welche Daten verarbeitet werden – und welche nicht.</div>
+            </div>
+            <span class="badge">DSGVO</span>
+          </a>
+
+          <a class="sidelink" href="#imprint">
+            <span class="ico" aria-hidden="true"></span>
+            <div>
+              <div class="title">Impressum</div>
+              <div class="desc">Anbieterkennzeichnung, Kontakt, Verantwortlicher.</div>
+            </div>
+            <span class="badge">§5</span>
+          </a>
+        </div>
+
+        <div class="sidegroup">
+          <h3>Direktkontakt</h3>
+          <a class="sidelink" href="mailto:info@zumbyte.de?subject=GitDesk%20Support">
+            <span class="ico" aria-hidden="true"></span>
+            <div>
+              <div class="title">info@zumbyte.de</div>
+              <div class="desc">E-Mail an den Support (inkl. Ticket-Infos unten).</div>
+            </div>
+            <span class="badge">Mail</span>
+          </a>
+        </div>
+      </aside>
+
+      <main class="card" aria-label="Inhalt">
+        <div class="hero">
+          <h2>GitDesk: kurz, praktisch – ohne Git-Gatekeeping.</h2>
+          <p>
+            Diese Seite bündelt <strong>Support</strong>, <strong>Datenschutz</strong> und <strong>Impressum</strong>
+            für <strong>Zumbyte – GitDesk</strong> (vormals „GitWarden“).
+            Ziel: App-Review-tauglich, menschlich lesbar, ohne juristischen Nebelwerfer.
+          </p>
+          <div class="meta">
+            <span class="chip">Support: <a href="mailto:info@zumbyte.de?subject=GitDesk%20Support">info@zumbyte.de</a></span>
+            <span class="chip">Plattform: macOS</span>
+            <span class="chip">Letzte Aktualisierung: <span id="lastUpdated">31.01.2026</span></span>
+          </div>
+        </div>
+
+        <!-- SUPPORT -->
+        <section id="support" class="card" style="box-shadow:none; background:transparent; border:none; padding:0;">
+          <div class="card" style="box-shadow:none;">
+            <div style="padding:18px;">
+              <h3>Support & Kontakt</h3>
+              <p>
+                Du erreichst den Support am schnellsten per E-Mail:
+                <a href="mailto:info@zumbyte.de?subject=GitDesk%20Support">info@zumbyte.de</a>.
+              </p>
+
+              <div class="two">
+                <div class="panel">
+                  <h4>Was in eine Support-Mail gehört</h4>
+                  <p>
+                    Bitte (wenn möglich): App-Version, macOS-Version, kurzer Ablauf „Was habe ich gemacht?“,
+                    und die genaue Fehlermeldung / Screenshot. Keine Sorge: Du musst nicht in Hex sprechen.
+                  </p>
+                </div>
+                <div class="panel">
+                  <h4>Antwortzeiten</h4>
+                  <p>
+                    Ich antworte in der Regel zeitnah. Bei komplexen Bugs kann’s etwas dauern – Git ist
+                    manchmal wie ein Oktopus aus Knoten.
+                  </p>
+                </div>
+              </div>
+
+              <div class="callout">
+                <strong>Tipp:</strong> Wenn du Logs mitschickst, bitte keine Secrets (Tokens, Passwörter, private Keys).
+                GitDesk sollte solche Daten nicht anfordern – und ich will sie auch nicht haben.
+              </div>
+
+              <details>
+                <summary>FAQ: Wo liegen meine Repos / Daten?</summary>
+                <p>
+                  GitDesk arbeitet typischerweise mit Repositories, die bereits auf deinem Mac liegen.
+                  Deine Git-Daten bleiben (im Normalfall) lokal, in deinem Dateisystem.
+                </p>
+              </details>
+
+              <details>
+                <summary>FAQ: Nutzt GitDesk Tracking oder Analytics?</summary>
+                <p>
+                  Diese Seite ist so vorbereitet, dass du sie als „kein Tracking“ deklarieren kannst.
+                  Falls du in der App doch Analytics/Crash-SDKs einsetzt, passe bitte die Datenschutzerklärung
+                  unten entsprechend an (Apple will Konsistenz mit den App-Store-Datenschutzangaben).
+                </p>
+              </details>
+
+              <details>
+                <summary>Feature-Wunsch einreichen</summary>
+                <p>
+                  Schreib einfach eine Mail mit Betreff „Feature Request“ und beschreib kurz den Use-Case.
+                  Bonuspunkte für: „Warum ist das nützlich?“ und „Wie würde ich’s in 2 Klicks bedienen?“
+                </p>
+              </details>
+            </div>
+          </div>
+        </section>
+
+        <!-- PRIVACY -->
+        <section id="privacy" class="card" style="box-shadow:none; background:transparent; border:none; padding:0; margin-top:14px;">
+          <div class="card" style="box-shadow:none;">
+            <div style="padding:18px;">
+              <h3>Datenschutzerklärung</h3>
+              <p>
+                Diese Datenschutzerklärung informiert darüber, wie <strong>Zumbyte – GitDesk</strong>
+                personenbezogene Daten verarbeitet. „Personenbezogen“ heißt: Daten, die dich direkt oder indirekt
+                identifizieren können.
+              </p>
+
+              <div class="two">
+                <div class="panel">
+                  <h4>Verantwortlicher</h4>
+                  <p>
+                    Andreas Zumbansen<br>
+                    Kastanienallee 16a<br>
+                    59174 Kamen, Deutschland<br>
+                    E-Mail: <a href="mailto:info@zumbyte.de">info@zumbyte.de</a>
+                  </p>
+                </div>
+                <div class="panel">
+                  <h4>Grundsatz</h4>
+                  <p>
+                    GitDesk ist als Desktop-Tool konzipiert. Wenn du die App normal nutzt,
+                    werden Git-Inhalte typischerweise <strong>lokal auf deinem Gerät</strong> verarbeitet.
+                  </p>
+                </div>
+              </div>
+
+              <h4 style="margin-top:14px; font-size:13px; color:rgba(255,255,255,.86)">1) Welche Daten verarbeitet GitDesk?</h4>
+              <ul>
+                <li>
+                  <strong>Lokale Repo-Daten:</strong> GitDesk verarbeitet Repository-Inhalte, Commits, Branch-Namen,
+                  Diff-Ansichten etc. – soweit du diese lokal auf deinem Mac ausgewählt hast.
+                </li>
+                <li>
+                  <strong>App-Einstellungen (lokal):</strong> z. B. UI-Preferences, zuletzt verwendete Repos, Filter
+                  (sofern die App solche Einstellungen anbietet).
+                </li>
+                <li>
+                  <strong>Support-Kommunikation:</strong> Wenn du per E-Mail kontaktierst, verarbeiten wir deine E-Mail-Adresse,
+                  den Inhalt der Nachricht und ggf. Anhänge (z. B. Screenshots), um dein Anliegen zu bearbeiten.
+                </li>
+              </ul>
+
+              <div class="callout">
+                <strong>Kein heimliches Datensammeln:</strong> Diese Vorlage geht davon aus, dass GitDesk
+                <strong>keine</strong> Werbe-IDs, keine Profilbildung und kein Cross-App-Tracking nutzt.
+                Wenn das bei dir anders ist, muss dieser Abschnitt angepasst werden.
+              </div>
+
+              <h4 style="margin-top:14px; font-size:13px; color:rgba(255,255,255,.86)">2) Übermittlung an Dritte</h4>
+              <p>
+                Eine Weitergabe personenbezogener Daten an Dritte erfolgt grundsätzlich nur, wenn dies erforderlich ist,
+                z. B. zur Bearbeitung einer Support-Anfrage oder aufgrund gesetzlicher Pflichten.
+              </p>
+
+              <details>
+                <summary>Apple-Systemdienste (z. B. Crash Reports)</summary>
+                <p>
+                  macOS kann – abhängig von deinen Systemeinstellungen – Diagnose- oder Crash-Informationen an Apple senden.
+                  Dies geschieht im Rahmen der Apple-Dienste und nicht „als Tracking“ durch GitDesk.
+                  Details findest du in den Datenschutzhinweisen von Apple sowie in deinen Systemeinstellungen
+                  („Analyse & Verbesserungen“).
+                </p>
+              </details>
+
+              <details>
+                <summary>Wenn GitDesk Netzwerkfunktionen nutzt (Fetch/Pull/Push)</summary>
+                <p>
+                  Bei Git-Operationen mit Remotes (z. B. GitHub/GitLab/Bitbucket oder eigener Server) kommuniziert GitDesk
+                  mit dem von dir konfigurierten Remote. Dabei werden technisch notwendige Daten übertragen
+                  (z. B. Repository-URLs, Auth-Mechanismen, IP-Adresse). Diese Verarbeitung erfolgt durch den jeweiligen
+                  Remote-Anbieter bzw. deinen Server, und richtet sich nach deren Datenschutzbedingungen.
+                </p>
+              </details>
+
+              <h4 style="margin-top:14px; font-size:13px; color:rgba(255,255,255,.86)">3) Rechtsgrundlagen (DSGVO)</h4>
+              <ul>
+                <li><strong>Art. 6 Abs. 1 lit. b DSGVO</strong> (Vertrag/Vertragsanbahnung), z. B. bei Support zur App-Nutzung.</li>
+                <li><strong>Art. 6 Abs. 1 lit. f DSGVO</strong> (berechtigtes Interesse), z. B. Sicherstellung der Stabilität/Sicherheit.</li>
+                <li><strong>Art. 6 Abs. 1 lit. a DSGVO</strong> (Einwilligung), sofern du freiwillig Daten übermittelst (z. B. E-Mail-Anhänge).</li>
+              </ul>
+
+              <h4 style="margin-top:14px; font-size:13px; color:rgba(255,255,255,.86)">4) Speicherdauer</h4>
+              <p>
+                Support-E-Mails speichern wir so lange, wie es zur Bearbeitung nötig ist und/oder gesetzliche Aufbewahrungsfristen bestehen.
+                Lokale App-Einstellungen verbleiben auf deinem Gerät, bis du sie löschst oder die App deinstallierst.
+              </p>
+
+              <h4 style="margin-top:14px; font-size:13px; color:rgba(255,255,255,.86)">5) Deine Rechte</h4>
+              <p>
+                Du hast – je nach Voraussetzung – das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung,
+                Datenübertragbarkeit sowie Widerspruch gegen die Verarbeitung. Außerdem hast du das Recht, dich bei einer
+                Datenschutzaufsichtsbehörde zu beschweren.
+              </p>
+
+              <h4 style="margin-top:14px; font-size:13px; color:rgba(255,255,255,.86)">6) Kontakt zum Datenschutz</h4>
+              <p>
+                Fragen zum Datenschutz: <a href="mailto:info@zumbyte.de?subject=GitDesk%20Datenschutz">info@zumbyte.de</a>
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- IMPRINT -->
+        <section id="imprint" class="card" style="box-shadow:none; background:transparent; border:none; padding:0; margin-top:14px;">
+          <div class="card" style="box-shadow:none;">
+            <div style="padding:18px;">
+              <h3>Impressum</h3>
+              <p>
+                Angaben gemäß § 5 DDG (ehem. TMG) und verantwortliche Stelle i.S.d. DSGVO:
+              </p>
+
+              <div class="panel">
+                <p style="margin:0">
+                  <strong>Andreas Zumbansen</strong><br>
+                  Kastanienallee 16a<br>
+                  59174 Kamen<br>
+                  Deutschland<br>
+                  E-Mail: <a href="mailto:info@zumbyte.de">info@zumbyte.de</a>
+                </p>
+              </div>
+
+              <h4 style="margin-top:14px; font-size:13px; color:rgba(255,255,255,.86)">Haftung für Inhalte</h4>
+              <p>
+                Die Inhalte dieser Seite wurden mit Sorgfalt erstellt. Für Richtigkeit, Vollständigkeit und Aktualität
+                kann jedoch keine Gewähr übernommen werden, soweit gesetzlich zulässig.
+              </p>
+
+              <h4 style="margin-top:14px; font-size:13px; color:rgba(255,255,255,.86)">Haftung für Links</h4>
+              <p>
+                Diese Seite enthält in der Regel keine externen Links. Falls doch, gilt: Für Inhalte externer Seiten
+                sind ausschließlich deren Betreiber verantwortlich.
+              </p>
+
+              <h4 style="margin-top:14px; font-size:13px; color:rgba(255,255,255,.86)">Urheberrecht</h4>
+              <p>
+                Inhalte und Gestaltung dieser Seite unterliegen dem Urheberrecht. Eine Vervielfältigung oder Verwendung
+                außerhalb der Grenzen des Urheberrechts bedarf der Zustimmung des Rechteinhabers.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <div class="footer" role="contentinfo">
+          <div>© <span id="year"></span> Zumbyte · GitDesk</div>
+          <div style="opacity:.85">Kontakt: <a href="mailto:info@zumbyte.de">info@zumbyte.de</a></div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    // Small UX helpers, no trackers, no external calls.
+    (function(){
+      const yearEl = document.getElementById('year');
+      if(yearEl) yearEl.textContent = new Date().getFullYear();
+
+      // Cmd+K focus search (like an app)
+      const q = document.getElementById('q');
+      window.addEventListener('keydown', (e) => {
+        const isCmdK = (e.key.toLowerCase() === 'k') && (e.metaKey || e.ctrlKey);
+        if(isCmdK){
+          e.preventDefault();
+          q?.focus();
+        }
+      });
+
+      // Simple in-page highlight search (local only)
+      const targets = Array.from(document.querySelectorAll('main h3, main h4, main p, main li, main summary'))
+        .filter(el => el.textContent && el.textContent.trim().length > 0);
+
+      let last = [];
+      function clearMarks(){
+        last.forEach(el => el.innerHTML = el.__orig || el.innerHTML);
+        last = [];
+      }
+
+      function mark(el, term){
+        if(!el.__orig) el.__orig = el.innerHTML;
+        const safe = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const re = new RegExp(`(${safe})`, 'ig');
+        el.innerHTML = el.__orig.replace(re, '<mark style="background:rgba(48,213,255,.18); color:inherit; padding:0 2px; border-radius:6px; border:1px solid rgba(48,213,255,.18)">$1</mark>');
+      }
+
+      q?.addEventListener('input', () => {
+        const term = q.value.trim();
+        clearMarks();
+        if(term.length < 2) return;
+        targets.forEach(el => {
+          if(el.textContent.toLowerCase().includes(term.toLowerCase())){
+            mark(el, term);
+            last.push(el);
+          }
+        });
+      });
+
+      // Update "Last updated" automatically if you want:
+      // document.getElementById('lastUpdated').textContent = new Date().toLocaleDateString('de-DE');
+    })();
+  </script>
+</body>
+</html>
